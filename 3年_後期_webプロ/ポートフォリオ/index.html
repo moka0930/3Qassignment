@@ -1,0 +1,924 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="見代梨々香（ミヨリリカ）のポートフォリオ。制作物・活動・スキル・連絡先。" />
+  <title>ミヨリリカ | Portfolio</title>
+
+  <style>
+    /* ---------------------------
+      Museum-like minimal system
+    ---------------------------- */
+    :root{
+      --bg: #f4f1ea;
+      --paper: #fbfaf7;
+      --ink: #181818;
+      --muted: #6e6a63;
+      --line: rgba(20,20,20,.12);
+      --shadow: 0 14px 40px rgba(0,0,0,.08);
+      --radius: 18px;
+      --radius2: 26px;
+      --max: 1060px;
+
+      --serif: ui-serif, "Times New Roman", "Hiragino Mincho ProN", "Yu Mincho", "Noto Serif JP", serif;
+      --sans: ui-sans-serif, system-ui, -apple-system, "Hiragino Sans", "Yu Gothic", "Noto Sans JP", "Segoe UI", sans-serif;
+
+      --accent1: #b8a88a; /* warm brass */
+      --accent2: #bcd1c5; /* soft green */
+      --accent3: #d39a92; /* dusty rose */
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      color:var(--ink);
+      background:
+        radial-gradient(1100px 600px at 15% -10%, rgba(184,168,138,.25), transparent 55%),
+        radial-gradient(900px 500px at 90% 10%, rgba(188,209,197,.22), transparent 55%),
+        radial-gradient(800px 520px at 70% 95%, rgba(211,154,146,.18), transparent 60%),
+        var(--bg);
+      font-family: var(--sans);
+      letter-spacing:.2px;
+    }
+
+    a{ color:inherit; text-decoration:none; }
+    a:hover{ text-decoration:underline; text-underline-offset: 4px; }
+    img{ max-width:100%; display:block; }
+
+    .wrap{ width:min(var(--max), calc(100% - 40px)); margin-inline:auto; }
+
+    /* Top nav */
+    .nav{
+      position:sticky; top:0; z-index:10;
+      backdrop-filter: blur(10px);
+      background: color-mix(in srgb, var(--bg) 88%, transparent);
+      border-bottom:1px solid var(--line);
+    }
+    .nav .inner{
+      display:flex; align-items:center; justify-content:space-between;
+      padding:14px 0;
+      gap:14px;
+    }
+    .brand{
+      display:flex; align-items:baseline; gap:10px;
+    }
+    .brand .title{
+      font-family: var(--serif);
+      font-size:18px;
+      letter-spacing:.8px;
+    }
+    .brand .tag{
+      font-size:12px; color:var(--muted);
+      border:1px solid var(--line);
+      padding:4px 8px;
+      border-radius:999px;
+      background: color-mix(in srgb, var(--paper) 70%, transparent);
+    }
+
+    .navlinks{
+      display:flex; flex-wrap:wrap; gap:10px 16px; align-items:center; justify-content:flex-end;
+      font-size:13px;
+      color:color-mix(in srgb, var(--ink) 88%, var(--muted));
+    }
+    .navlinks a{ opacity:.92; }
+    .navlinks a:hover{ opacity:1; }
+
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      border:1px solid var(--line);
+      background: color-mix(in srgb, var(--paper) 82%, transparent);
+      padding:9px 12px;
+      border-radius:999px;
+      font-size:13px;
+      gap:8px;
+      transition: transform .12s ease, background .12s ease;
+    }
+    .btn:hover{ transform: translateY(-1px); background: var(--paper); text-decoration:none; }
+    .btn.primary{
+      border-color: color-mix(in srgb, var(--ink) 16%, var(--line));
+      background: color-mix(in srgb, var(--ink) 6%, var(--paper));
+    }
+
+    /* Hero */
+    .hero{
+      padding:34px 0 22px;
+    }
+    .heroGrid{
+      display:grid;
+      grid-template-columns: 1.25fr .75fr;
+      gap:18px;
+      align-items:stretch;
+    }
+
+    .card{
+      background: color-mix(in srgb, var(--paper) 92%, transparent);
+      border:1px solid var(--line);
+      border-radius: var(--radius2);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      position:relative;
+    }
+
+    .heroArt{
+      min-height: 340px;
+      background:
+        linear-gradient(0deg, rgba(0,0,0,.52), rgba(0,0,0,.14)),
+        url("images/hero.jpg") center/cover no-repeat;
+      display:flex; align-items:flex-end;
+      padding:22px;
+      isolation:isolate;
+    }
+    /* if no image, fallback texture */
+    .heroArt.noimg{
+      background:
+        radial-gradient(800px 260px at 20% 10%, rgba(184,168,138,.25), transparent 60%),
+        radial-gradient(700px 280px at 88% 20%, rgba(188,209,197,.22), transparent 60%),
+        radial-gradient(650px 320px at 60% 95%, rgba(211,154,146,.20), transparent 62%),
+        linear-gradient(0deg, rgba(0,0,0,.36), rgba(0,0,0,.08));
+    }
+    .heroTitle{
+      color:#fff;
+      max-width: 520px;
+    }
+    .heroTitle h1{
+      margin:0 0 10px;
+      font-family: var(--serif);
+      font-weight:600;
+      letter-spacing: 1.2px;
+      font-size: 34px;
+      line-height:1.1;
+    }
+    .heroTitle p{
+      margin:0;
+      color: rgba(255,255,255,.86);
+      font-size: 13px;
+      line-height: 1.7;
+    }
+    .heroTitle .meta{
+      margin-top:12px;
+      display:flex; flex-wrap:wrap; gap:8px;
+    }
+    .pill{
+      font-size:12px;
+      color: rgba(255,255,255,.9);
+      border:1px solid rgba(255,255,255,.28);
+      background: rgba(255,255,255,.10);
+      padding:6px 10px;
+      border-radius:999px;
+      backdrop-filter: blur(8px);
+    }
+
+    .heroSide{
+      padding:18px;
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+    }
+    .avatar{
+      display:flex; gap:14px; align-items:center;
+      padding:14px;
+      border-radius: var(--radius);
+      border:1px solid var(--line);
+      background: color-mix(in srgb, var(--paper) 92%, transparent);
+    }
+    .avatar .photo{
+      width:62px; height:62px;
+      border-radius: 999px;
+      border:1px solid var(--line);
+      background:
+        radial-gradient(circle at 30% 30%, rgba(184,168,138,.35), transparent 55%),
+        radial-gradient(circle at 70% 60%, rgba(188,209,197,.35), transparent 55%),
+        color-mix(in srgb, var(--paper) 86%, transparent);
+      overflow:hidden;
+    }
+    .avatar .photo img{ width:100%; height:100%; object-fit:cover; }
+    .avatar .name{
+      display:flex; flex-direction:column; gap:4px;
+      min-width: 0;
+    }
+    .avatar .name strong{
+      font-family: var(--serif);
+      letter-spacing:.6px;
+      font-size: 16px;
+    }
+    .avatar .name span{
+      color:var(--muted);
+      font-size: 12px;
+      line-height:1.4;
+    }
+
+    .quick{
+      display:flex; flex-wrap:wrap; gap:8px;
+      padding: 0 4px;
+    }
+    .chip{
+      font-size:12px;
+      color: color-mix(in srgb, var(--ink) 88%, var(--muted));
+      border:1px solid var(--line);
+      border-radius:999px;
+      padding:7px 10px;
+      background: color-mix(in srgb, var(--paper) 88%, transparent);
+    }
+    .chip.dot::before{
+      content:"";
+      display:inline-block;
+      width:7px; height:7px; border-radius:999px;
+      background: var(--accent1);
+      margin-right:8px;
+      vertical-align: middle;
+    }
+    .chip.dot.g::before{ background: var(--accent2); }
+    .chip.dot.r::before{ background: var(--accent3); }
+
+    .ctaRow{
+      display:flex; gap:10px; flex-wrap:wrap;
+      margin-top:auto;
+      padding: 4px;
+    }
+
+    /* Sections */
+    section{ padding: 34px 0; }
+    .sectionHead{
+      display:flex; align-items:baseline; justify-content:space-between;
+      gap:12px;
+      margin-bottom:14px;
+    }
+    .sectionHead h2{
+      margin:0;
+      font-family: var(--serif);
+      letter-spacing: 1px;
+      font-size: 20px;
+    }
+    .sectionHead p{
+      margin:0;
+      color:var(--muted);
+      font-size: 12px;
+      line-height:1.6;
+      max-width: 52ch;
+    }
+
+    .grid2{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:16px;
+    }
+    .panel{
+      padding:18px;
+      border-radius: var(--radius2);
+      border:1px solid var(--line);
+      background: color-mix(in srgb, var(--paper) 92%, transparent);
+      box-shadow: 0 10px 30px rgba(0,0,0,.06);
+    }
+    .panel h3{
+      margin:0 0 10px;
+      font-size: 13px;
+      letter-spacing:.6px;
+      color: color-mix(in srgb, var(--ink) 86%, var(--muted));
+      text-transform: uppercase;
+    }
+    .lead{
+      font-size: 14px;
+      line-height: 1.9;
+      margin:0;
+      color: color-mix(in srgb, var(--ink) 92%, var(--muted));
+    }
+
+    .dl{
+      margin:12px 0 0;
+      padding:0;
+      list-style:none;
+      display:grid;
+      gap:10px;
+    }
+    .dl li{
+      display:grid;
+      grid-template-columns: 120px 1fr;
+      gap:12px;
+      padding:10px 0;
+      border-top: 1px dashed var(--line);
+    }
+    .dl li:first-child{ border-top: 1px dashed var(--line); }
+    .dl b{
+      font-size:12px;
+      color:var(--muted);
+      letter-spacing:.4px;
+      font-weight:600;
+    }
+    .dl span{
+      font-size: 13px;
+      line-height: 1.7;
+      color: color-mix(in srgb, var(--ink) 92%, var(--muted));
+    }
+
+    /* Works */
+    .tools{
+      display:flex; flex-wrap:wrap; gap:10px; align-items:center; justify-content:space-between;
+      margin: 12px 0 16px;
+    }
+    .filters{
+      display:flex; flex-wrap:wrap; gap:8px;
+    }
+    .filterBtn{
+      cursor:pointer;
+      border:1px solid var(--line);
+      background: color-mix(in srgb, var(--paper) 88%, transparent);
+      padding:8px 10px;
+      border-radius:999px;
+      font-size:12px;
+      color: color-mix(in srgb, var(--ink) 88%, var(--muted));
+    }
+    .filterBtn[aria-pressed="true"]{
+      background: color-mix(in srgb, var(--ink) 7%, var(--paper));
+      border-color: color-mix(in srgb, var(--ink) 18%, var(--line));
+      color: var(--ink);
+    }
+
+    .search{
+      display:flex; gap:8px; align-items:center;
+      border:1px solid var(--line);
+      background: color-mix(in srgb, var(--paper) 90%, transparent);
+      border-radius:999px;
+      padding:8px 12px;
+      min-width: 240px;
+    }
+    .search input{
+      border:none; outline:none;
+      background:transparent;
+      width: 100%;
+      font-size:12px;
+      color: var(--ink);
+    }
+    .search .k{
+      font-size:12px;
+      color: var(--muted);
+    }
+
+    .workGrid{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:14px;
+    }
+    .work{
+      overflow:hidden;
+      border-radius: var(--radius2);
+      border:1px solid var(--line);
+      background: color-mix(in srgb, var(--paper) 92%, transparent);
+      box-shadow: 0 10px 26px rgba(0,0,0,.06);
+      transition: transform .12s ease, box-shadow .12s ease;
+      display:flex; flex-direction:column;
+      min-height: 340px;
+    }
+    .work:hover{
+      transform: translateY(-2px);
+      box-shadow: 0 18px 44px rgba(0,0,0,.10);
+    }
+    .thumb{
+      height: 160px;
+      background:
+        radial-gradient(500px 200px at 25% 15%, rgba(184,168,138,.26), transparent 60%),
+        radial-gradient(420px 210px at 85% 30%, rgba(188,209,197,.24), transparent 60%),
+        radial-gradient(480px 240px at 55% 95%, rgba(211,154,146,.22), transparent 65%),
+        color-mix(in srgb, var(--paper) 85%, transparent);
+      border-bottom:1px solid var(--line);
+      position:relative;
+      overflow:hidden;
+    }
+    .thumb img{
+      width:100%; height:100%;
+      object-fit:cover;
+      filter: saturate(.95) contrast(.98);
+      opacity:.98;
+    }
+    .thumb .label{
+      position:absolute; left:12px; top:12px;
+      font-size:12px;
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.35);
+      background: rgba(0,0,0,.28);
+      color:#fff;
+      backdrop-filter: blur(10px);
+    }
+    .workBody{ padding:14px 14px 16px; display:flex; flex-direction:column; gap:10px; flex:1; }
+    .workBody h3{
+      margin:0;
+      font-family: var(--serif);
+      font-weight:600;
+      letter-spacing:.8px;
+      font-size: 16px;
+      line-height:1.3;
+    }
+    .workBody p{
+      margin:0;
+      font-size:12px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+    .metaRow{
+      display:flex; flex-wrap:wrap; gap:6px;
+      margin-top:auto;
+    }
+    .tag{
+      font-size:11px;
+      border:1px solid var(--line);
+      padding:6px 9px;
+      border-radius:999px;
+      background: color-mix(in srgb, var(--paper) 88%, transparent);
+      color: color-mix(in srgb, var(--ink) 86%, var(--muted));
+    }
+    .work a{ text-decoration:none; }
+    .work a:hover{ text-decoration:none; }
+
+    /* Others gallery */
+    .miniGrid{
+      display:grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap:12px;
+    }
+    .mini{
+      border-radius: 16px;
+      overflow:hidden;
+      border:1px solid var(--line);
+      background: color-mix(in srgb, var(--paper) 92%, transparent);
+      box-shadow: 0 10px 22px rgba(0,0,0,.05);
+    }
+    .mini .img{
+      aspect-ratio: 1 / 1;
+      background:
+        radial-gradient(420px 200px at 25% 15%, rgba(184,168,138,.22), transparent 60%),
+        radial-gradient(380px 210px at 85% 30%, rgba(188,209,197,.20), transparent 60%),
+        radial-gradient(460px 240px at 55% 95%, rgba(211,154,146,.18), transparent 65%),
+        color-mix(in srgb, var(--paper) 86%, transparent);
+    }
+    .mini .img img{ width:100%; height:100%; object-fit:cover; }
+    .mini .cap{
+      padding:10px 10px 12px;
+      border-top:1px solid var(--line);
+    }
+    .mini .cap b{
+      display:block;
+      font-size:12px;
+      font-family: var(--serif);
+      letter-spacing:.6px;
+      margin-bottom:4px;
+    }
+    .mini .cap span{
+      font-size:11px;
+      color:var(--muted);
+    }
+
+    /* Footer */
+    footer{
+      padding: 26px 0 40px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size:12px;
+    }
+    .foot{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:14px;
+      flex-wrap:wrap;
+    }
+    .foot .col{
+      min-width: 260px;
+      max-width: 520px;
+    }
+    .fine{
+      margin-top:8px;
+      line-height:1.8;
+    }
+
+    /* Responsive */
+    @media (max-width: 980px){
+      .heroGrid{ grid-template-columns: 1fr; }
+      .workGrid{ grid-template-columns: repeat(2, 1fr); }
+      .miniGrid{ grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (max-width: 560px){
+      .wrap{ width: min(var(--max), calc(100% - 28px)); }
+      .heroArt{ min-height: 320px; }
+      .heroTitle h1{ font-size: 30px; }
+      .dl li{ grid-template-columns: 1fr; gap:6px; }
+      .workGrid{ grid-template-columns: 1fr; }
+      .miniGrid{ grid-template-columns: repeat(2, 1fr); }
+      .search{ min-width: 0; width: 100%; }
+      .tools{ gap:10px; }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- NAV -->
+  <header class="nav">
+    <div class="wrap inner">
+      <div class="brand">
+        <div class="title">ミヨリリカ</div>
+        <div class="tag">Portfolio</div>
+      </div>
+
+      <nav class="navlinks" aria-label="ページ内ナビゲーション">
+        <a href="#about">About</a>
+        <a href="#works">Works</a>
+        <a href="#others">Others</a>
+        <a href="#contact">Contact</a>
+        <a class="btn primary" href="assets/CV.pdf" download>CV / PDF</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <main>
+    <div class="wrap hero">
+      <div class="heroGrid">
+        <div class="card heroArt noimg" role="img" aria-label="トップビジュアル">
+          <!-- ↑ 画像を使うなら .noimg を消して、images/hero.jpg を置いてね -->
+          <div class="heroTitle">
+            <h1>つくる。整える。伝える。</h1>
+            <p>
+              作品を「展示」する気持ちで、余白と情報のバランスを大切にしています。
+              就職・編入で伝わるポートフォリオを、静かに強く。
+            </p>
+            <div class="meta">
+              <span class="pill">Design / Prototype</span>
+              <span class="pill">Web / IoT</span>
+              <span class="pill">Kamiyama, Japan</span>
+            </div>
+          </div>
+        </div>
+
+        <aside class="card heroSide">
+          <div class="avatar">
+            <div class="photo">
+              <!-- 自分の写真を置くなら images/me.jpg -->
+              <!-- <img src="images/me.jpg" alt="見代梨々香の写真" /> -->
+            </div>
+            <div class="name">
+              <strong>見代 梨々香</strong>
+              <span>神山まるごと高専 / Student<br>ミニマルなUIと、体験の設計が好き。</span>
+            </div>
+          </div>
+
+          <div class="quick" aria-label="特徴">
+            <span class="chip dot">“見せ方”まで設計</span>
+            <span class="chip dot g">試作→検証→改善</span>
+            <span class="chip dot r">やさしい説明</span>
+            <span class="chip">Figma / Illustrator</span>
+            <span class="chip">HTML/CSS/JS</span>
+            <span class="chip">Arduino / M5Stack</span>
+          </div>
+
+          <div class="ctaRow">
+            <a class="btn primary" href="#works">作品を見る</a>
+            <a class="btn" href="#contact">連絡する</a>
+          </div>
+        </aside>
+      </div>
+    </div>
+
+    <!-- ABOUT -->
+    <section id="about">
+      <div class="wrap">
+        <div class="sectionHead">
+          <h2>About me</h2>
+          <p>“誰が見ても伝わる”を目標に、作品の背景とプロセスも一緒に残します。</p>
+        </div>
+
+        <div class="grid2">
+          <div class="panel">
+            <h3>Profile</h3>
+            <p class="lead">
+              企画・デザイン・実装まで、つながった形で作るのが得意です。<br>
+              アイデアを「動く形」にして、見てもらえる状態まで持っていきます。
+            </p>
+
+            <ul class="dl" aria-label="基本情報">
+              <li><b>興味</b><span>プロダクト体験 / UI / 仕組みの説明 / 展示のような見せ方</span></li>
+              <li><b>強み</b><span>①整理（情報設計） ②試作（形にする） ③改善（言語化と反映）</span></li>
+              <li><b>今やってる</b><span>ポートフォリオ整備 / 作品の文章化 / UIの質感づくり</span></li>
+            </ul>
+          </div>
+
+          <div class="panel">
+            <h3>Highlights (それっぽいけど使える)</h3>
+            <ul class="dl" aria-label="ハイライト">
+              <li><b>制作姿勢</b><span>“かわいい”だけで終わらせず、伝えるための構造を作る。</span></li>
+              <li><b>プロセス</b><span>課題→仮説→試作→検証→改善を短いサイクルで回す。</span></li>
+              <li><b>得意な役割</b><span>見せ方の最終調整（文章・余白・導線・図解）</span></li>
+              <li><b>求める環境</b><span>フィードバックが回って、改善で質が上がるチーム。</span></li>
+            </ul>
+
+            <div style="margin-top:14px; display:flex; gap:10px; flex-wrap:wrap;">
+              <a class="btn" href="assets/Resume.pdf" download>履歴書PDF</a>
+              <a class="btn" href="assets/Portfolio.pdf" download>作品集PDF</a>
+              <a class="btn" href="#works">代表作へ</a>
+            </div>
+
+            <p style="margin:14px 0 0; font-size:12px; color:var(--muted); line-height:1.8;">
+              ※PDFは後で差し替えればOK。リンク先が無くてもサイトは動くよ。
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- WORKS -->
+    <section id="works">
+      <div class="wrap">
+        <div class="sectionHead">
+          <h2>My Works</h2>
+          <p>作品＝成果物だけじゃなく、背景・狙い・工夫を短く添えると強くなる。</p>
+        </div>
+
+        <div class="tools" aria-label="作品フィルターと検索">
+          <div class="filters" role="group" aria-label="フィルター">
+            <button class="filterBtn" data-filter="all" aria-pressed="true">All</button>
+            <button class="filterBtn" data-filter="ui" aria-pressed="false">UI/Design</button>
+            <button class="filterBtn" data-filter="web" aria-pressed="false">Web</button>
+            <button class="filterBtn" data-filter="iot" aria-pressed="false">IoT</button>
+            <button class="filterBtn" data-filter="writing" aria-pressed="false">Writing</button>
+          </div>
+
+          <label class="search" aria-label="作品検索">
+            <span class="k">⌕</span>
+            <input id="q" type="search" placeholder="検索（例：Qoo / 心拍 / ポスター）" />
+          </label>
+        </div>
+
+        <div class="workGrid" id="workGrid">
+          <!-- 作品カード：増やすときはこの形式をコピペ -->
+
+          <article class="work" data-tags="ui web">
+            <a href="#" aria-label="作品詳細へ（仮リンク）">
+              <div class="thumb">
+                <!-- <img src="images/work-qoopocket.jpg" alt="Qoo-Pocketのサムネ" /> -->
+                <span class="label">UI / Concept</span>
+              </div>
+              <div class="workBody">
+                <h3>Qoo-Pocket（迷う時間すら楽しい）</h3>
+                <p>
+                  迷って買わなかった商品を“次の選択”につなげる仕組み。信頼を数ではなく体験で可視化。
+                </p>
+                <div class="metaRow">
+                  <span class="tag">Figma</span>
+                  <span class="tag">Information Design</span>
+                  <span class="tag">Prototype</span>
+                </div>
+              </div>
+            </a>
+          </article>
+
+          <article class="work" data-tags="iot">
+            <a href="#">
+              <div class="thumb">
+                <!-- <img src="images/work-bibiri.jpg" alt="ビビりマシンのサムネ" /> -->
+                <span class="label">IoT / Device</span>
+              </div>
+              <div class="workBody">
+                <h3>ビビりマシン（心拍×ゲーム性）</h3>
+                <p>
+                  直近10秒平均 + 5 を超えたらアラーム。M5Stackで可視化し、遊びのテンションを上げる装置。
+                </p>
+                <div class="metaRow">
+                  <span class="tag">Arduino</span>
+                  <span class="tag">BLE</span>
+                  <span class="tag">M5Stack</span>
+                </div>
+              </div>
+            </a>
+          </article>
+
+          <article class="work" data-tags="web ui">
+            <a href="#">
+              <div class="thumb">
+                <!-- <img src="images/work-portfolio.jpg" alt="ポートフォリオのサムネ" /> -->
+                <span class="label">Web / Build</span>
+              </div>
+              <div class="workBody">
+                <h3>ポートフォリオ（Museum layout）</h3>
+                <p>
+                  美術館の展示のように、余白と導線で見せる。作品を“並べる”より“読ませる”設計。
+                </p>
+                <div class="metaRow">
+                  <span class="tag">HTML/CSS</span>
+                  <span class="tag">Responsive</span>
+                  <span class="tag">A11y</span>
+                </div>
+              </div>
+            </a>
+          </article>
+
+          <article class="work" data-tags="writing">
+            <a href="#">
+              <div class="thumb">
+                <span class="label">Writing</span>
+              </div>
+              <div class="workBody">
+                <h3>説明文章（ルーブリック対応）</h3>
+                <p>
+                  技術・企画を“伝わる形”に翻訳。読み手が迷わない順番・主語・根拠の置き方を設計。
+                </p>
+                <div class="metaRow">
+                  <span class="tag">Structure</span>
+                  <span class="tag">Clarity</span>
+                  <span class="tag">Evidence</span>
+                </div>
+              </div>
+            </a>
+          </article>
+
+          <article class="work" data-tags="ui">
+            <a href="#">
+              <div class="thumb">
+                <span class="label">Design</span>
+              </div>
+              <div class="workBody">
+                <h3>ポスター / チラシ（アナログ広報）</h3>
+                <p>
+                  高齢者にも伝わる導線設計。QRの目立たせ方、手順の短文化、視線誘導の設計。
+                </p>
+                <div class="metaRow">
+                  <span class="tag">Layout</span>
+                  <span class="tag">Typography</span>
+                  <span class="tag">Print</span>
+                </div>
+              </div>
+            </a>
+          </article>
+
+          <article class="work" data-tags="web">
+            <a href="#">
+              <div class="thumb">
+                <span class="label">Web</span>
+              </div>
+              <div class="workBody">
+                <h3>用途特化Todo（学習制作）</h3>
+                <p>
+                  ローカル保存／テーマ切替／レスポンシブ対応。使う人を想定して仕様を整理した。
+                </p>
+                <div class="metaRow">
+                  <span class="tag">JavaScript</span>
+                  <span class="tag">LocalStorage</span>
+                  <span class="tag">UI</span>
+                </div>
+              </div>
+            </a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- OTHERS -->
+    <section id="others">
+      <div class="wrap">
+        <div class="sectionHead">
+          <h2>Others</h2>
+          <p>小さめの制作も置くと「手を動かしてる感」が出て強い。</p>
+        </div>
+
+        <div class="miniGrid" aria-label="小作品ギャラリー">
+          <div class="mini">
+            <div class="img">
+              <!-- <img src="images/other-1.jpg" alt="小作品1" /> -->
+            </div>
+            <div class="cap"><b>3D / Study</b><span>形の練習</span></div>
+          </div>
+          <div class="mini">
+            <div class="img"></div>
+            <div class="cap"><b>Illustration</b><span>世界観</span></div>
+          </div>
+          <div class="mini">
+            <div class="img"></div>
+            <div class="cap"><b>Logo</b><span>シンボル案</span></div>
+          </div>
+          <div class="mini">
+            <div class="img"></div>
+            <div class="cap"><b>Poster</b><span>広報</span></div>
+          </div>
+          <div class="mini">
+            <div class="img"></div>
+            <div class="cap"><b>Craft</b><span>手作業</span></div>
+          </div>
+          <div class="mini">
+            <div class="img"></div>
+            <div class="cap"><b>Photo</b><span>記録</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact">
+      <div class="wrap">
+        <div class="sectionHead">
+          <h2>Contact</h2>
+          <p>就職・編入向けなら「連絡できる」状態を作るのが大事。SNSでもOK。</p>
+        </div>
+
+        <div class="grid2">
+          <div class="panel">
+            <h3>Message</h3>
+            <p class="lead">
+              ご連絡は、メールまたはSNSでお願いします。<br>
+              「どの作品を見て」連絡したか書いてもらえると、返信がスムーズです。
+            </p>
+
+            <ul class="dl" style="margin-top:14px;">
+              <li><b>Email</b><span><a href="mailto:yourname@example.com">yourname@example.com</a>（後で差し替え）</span></li>
+              <li><b>GitHub</b><span><a href="#" target="_blank" rel="noreferrer">https://github.com/yourname</a></span></li>
+              <li><b>Instagram</b><span><a href="#" target="_blank" rel="noreferrer">@yourname</a></span></li>
+            </ul>
+          </div>
+
+          <div class="panel">
+            <h3>Mini CV (短く強い)</h3>
+            <ul class="dl">
+              <li><b>志向</b><span>見た目より「伝わる構造」。余白・導線・主語を整える。</span></li>
+              <li><b>得意</b><span>デザイン ↔ 実装 の間をつなぐ。試作して説明できる。</span></li>
+              <li><b>興味領域</b><span>UI、体験設計、教育/福祉寄りの分かりやすさ</span></li>
+              <li><b>一言</b><span>“展示する気持ち”で作ります。</span></li>
+            </ul>
+
+            <div style="margin-top:14px; display:flex; gap:10px; flex-wrap:wrap;">
+              <a class="btn primary" href="assets/Portfolio.pdf" download>作品集PDF</a>
+              <a class="btn" href="#about">Aboutへ</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="wrap foot">
+      <div class="col">
+        <div style="font-family:var(--serif); letter-spacing:.8px; color:var(--ink);">ミヨリリカ</div>
+        <div class="fine">
+          このサイトは「美術館みたいに、静かに強く」をテーマにしています。<br>
+          作品の“数”より、作品の“伝わり方”を大事にしています。
+        </div>
+      </div>
+      <div class="col">
+        <div class="fine">
+          © <span id="y"></span> Miyo Ririka. All rights reserved.<br>
+          Built with HTML / CSS / JavaScript.
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // year
+    document.getElementById("y").textContent = new Date().getFullYear();
+
+    // smooth scroll
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+      a.addEventListener("click", (e)=>{
+        const id = a.getAttribute("href");
+        if(!id || id === "#") return;
+        const el = document.querySelector(id);
+        if(!el) return;
+        e.preventDefault();
+        el.scrollIntoView({behavior:"smooth", block:"start"});
+      });
+    });
+
+    // filter + search
+    const grid = document.getElementById("workGrid");
+    const cards = Array.from(grid.querySelectorAll(".work"));
+    const buttons = Array.from(document.querySelectorAll(".filterBtn"));
+    const q = document.getElementById("q");
+
+    let currentFilter = "all";
+
+    function apply(){
+      const keyword = (q.value || "").trim().toLowerCase();
+
+      cards.forEach(card=>{
+        const tags = (card.dataset.tags || "").split(/\s+/).filter(Boolean);
+        const text = card.innerText.toLowerCase();
+
+        const okFilter = (currentFilter === "all") || tags.includes(currentFilter);
+        const okSearch = !keyword || text.includes(keyword);
+
+        card.style.display = (okFilter && okSearch) ? "" : "none";
+      });
+    }
+
+    buttons.forEach(btn=>{
+      btn.addEventListener("click", ()=>{
+        currentFilter = btn.dataset.filter;
+        buttons.forEach(b=>b.setAttribute("aria-pressed","false"));
+        btn.setAttribute("aria-pressed","true");
+        apply();
+      });
+    });
+
+    q.addEventListener("input", apply);
+  </script>
+</body>
+</html>
