@@ -34,21 +34,23 @@ window.addEventListener("load", () => {
   if (heroCard) heroCard.classList.add("is-ready");
 });
 
-// ===== Scroll reveal (背景テキスト) =====
+// ===== Scroll reveal (背景テキスト / Aboutカードも) =====
 document.addEventListener("DOMContentLoaded", () => {
   const about = document.querySelector("#about .textBlock");
   if (about) about.classList.add("reveal");
 
-  const els = document.querySelectorAll(".reveal");
+  // ✅ .revealCard も監視対象に追加
+  const els = document.querySelectorAll(".reveal, .revealCard");
   if (els.length === 0) return;
 
   const io = new IntersectionObserver((entries) => {
     entries.forEach(ent => {
-      if (ent.isIntersecting) ent.target.classList.add("is-in");
+      if (ent.isIntersecting) {
+        ent.target.classList.add("is-in");
+        io.unobserve(ent.target); // 1回だけ発火（エモ安定）
+      }
     });
   }, { threshold: 0.18 });
 
   els.forEach(el => io.observe(el));
 });
-
-

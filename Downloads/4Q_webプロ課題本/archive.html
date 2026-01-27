@@ -20,7 +20,8 @@
     </div>
     <nav class="menuPanel" id="menuPanel" aria-hidden="true">
       <a href="index.html">ホーム</a>
-      <a href="index.html#works">作品一覧</a>
+      <a href="index.html#works">Works</a>
+      <a href="index.html#projects">Project</a>
       <a href="contact.html">お問合せ</a>
       <a href="archive.html">Archive（管理）</a>
     </nav>
@@ -36,16 +37,16 @@
       <form class="form" id="workForm">
         <input type="hidden" id="workId" />
 
-        <label>タイトル
-          <input id="title" required />
+        <label>
+          種別
+          <select id="itemType">
+            <option value="work">work</option>
+            <option value="project">project</option>
+          </select>
         </label>
 
-        <label class="field">
-          <span class="field__label">種別</span>
-          <select id="itemType" class="field__control">
-            <option value="work" selected>Work</option>
-            <option value="project">Project</option>
-          </select>
+        <label>タイトル
+          <input id="title" required />
         </label>
 
         <label>タグ（例：絵・デッサン）
@@ -54,6 +55,10 @@
 
         <label>説明
           <textarea id="desc" required rows="3"></textarea>
+        </label>
+
+        <label>詳細（任意）
+          <textarea id="detail" rows="6" placeholder="背景 / 役割 / 成果など"></textarea>
         </label>
 
         <label>日付（例：2025/10）
@@ -65,6 +70,11 @@
           <input id="image" required />
         </label>
 
+        <label>
+          リンク（project用・任意）
+          <input id="link" type="url" placeholder="https://..." />
+        </label>
+
         <div class="formActions">
           <button class="btn" type="submit" id="saveBtn">追加</button>
           <button class="btn btn--ghost" type="button" id="resetBtn">リセット</button>
@@ -74,18 +84,13 @@
       </form>
     </section>
 
-    <section class="section">
-      <h2 class="sectionTitle">Work</h2>
-      <div class="cards" id="worksList"></div>
+    <section class="admin">
+      <h2 class="sectionTitle">Works / Project（削除/編集）</h2>
+      <div class="adminList" id="adminList"></div>
     </section>
-
-    <section class="section">
-      <h2 class="sectionTitle">Project</h2>
-      <div class="cards" id="projectsList"></div>
-    </section>
-
   </main>
 
+  <script src="js/gate.js"></script>
   <script src="js/common.js"></script>
   <script src="js/archive.js"></script>
 </body>

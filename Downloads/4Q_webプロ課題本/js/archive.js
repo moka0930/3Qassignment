@@ -1,57 +1,136 @@
 // js/archive.js
 (() => {
-  const STORAGE_KEY = "miyoWorks"; // ★index側も同じキーを読む必要あり
+  "use strict";
+
+  const KEY = "miyoWorks";
+  const KEY_DELETED = "miyoWorksDeleted";
 
   const $ = (sel) => document.querySelector(sel);
 
+  // form
   const form = $("#workForm");
-  const workIdEl = $("#workId");
+  const workIdEl = $("#workId"); // hidden想定
   const titleEl = $("#title");
   const tagEl = $("#tag");
   const descEl = $("#desc");
   const dateEl = $("#date");
   const imageEl = $("#image");
 
-  const saveBtn = $("#saveBtn");
-  const resetBtn = $("#resetBtn");
-  const adminList = $("#adminList");
+  // add (work/project + link)
+  const itemTypeEl = $("#itemType");
+  const linkEl = $("#link");
 
+  // list
+  const listEl = $("#adminList");
+  // ↑もしHTMLが違うなら、ここをあなたのidに変更して
+
+  // ===== seed（home.jsと同じものを置く：管理画面でも同期する） =====
+  const seed = [
+    {
+      id: "seed-bakuhatsu",
+      itemType: "work",
+      title: "爆発",
+      tag: "#木炭 #デッサン",
+      desc: "「運動した後の感情を表現してください」というテーマで描いた作品。感情の微細な動きを詰め込んだ。",
+      date: "2022/08",
+      image: "images/木炭.jpg"
+    },
+    {
+      id: "seed-seimei",
+      itemType: "work",
+      title: "生命",
+      tag: "#油絵 #アクリル",
+      desc: "「日常と架空を組み合わせた風景を描きなさい」というテーマで描いた作品。波に打たれても折れないけやきはまさに不屈の精神を感じさせる。",
+      date: "2023/11",
+      image: "images/油絵.jpg"
+    },
+    {
+      id: "seed-kirin",
+      itemType: "work",
+      title: "キリン",
+      tag: "#落書き #イラスト",
+      desc: "ちょっと不恰好なキリンのイラスト。当時はひたすらに書くことが楽しかった。ものづくりの原点とも言える一枚。",
+      date: "2014/01",
+      image: "images/キリン.jpg"
+    },
+
+    // project
+    {
+      id: "seed-saakuru",
+      itemType: "project",
+      title: "さあくる",
+      tag: "#町内バイト #デジタル万屋",
+      desc: "神山町のちょっとユニークなバイト。地域に根差した活動を行っている。<br>1年生の後期、お祭りを観に神社へ向かった帰り道",
+      date: "2023/11",
+      image: "images/さあくる.webp",
+      link: ""
+    },
+    {
+      id: "seed-qoopocket",
+      itemType: "project",
+      title: "Qoo-Pocket",
+      tag: "#UX #企画 #プロトタイプ",
+      desc: "マイナビキャリア甲子園で活動中。企業や社会が抱えるテーマについて自分たちなりの解決策を提案する。",
+      date: "2025/11",
+      image: "images/マイナビ.png",
+      link: ""
+    },
+    {
+      id: "seed-kousensai",
+      itemType: "project",
+      title: "高専祭物販",
+      tag: "#編み物 #スイーツ",
+      desc: "高専祭で「アフタヌーンティ」をコンセプトに編んだスイーツを販売。ものづくりを見せるだけではなく、売るという体験をした。",
+      date: "2025/10",
+      image: "images/編み物.jpg",
+      link: ""
+    },
+  ];
+
+  // ===== utils =====
   function safeParse(json, fallback) {
     try { return JSON.parse(json) ?? fallback; } catch { return fallback; }
   }
 
-  function loadWorks() {
-    return safeParse(localStorage.getItem(STORAGE_KEY), []);
+  function getAll() {
+    const arr = safeParse(localStorage.getItem(KEY), []);
+    return arr.map(x => ({
+      ...x,
+      itemType: x.itemType || "work",
+      link: x.link || ""
+    }));
   }
 
-  function saveWorks(works) {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(works));
+  function setAll(arr) {
+    localStorage.setItem(KEY, JSON.stringify(arr));
+  }
+
+  function getDeleted() {
+    return safeParse(localStorage.getItem(KEY_DELETED), []);
+  }
+
+  function setDeleted(ids) {
+    localStorage.setItem(KEY_DELETED, JSON.stringify(ids));
+  }
+
+  // 削除済みseedは復活させない + seedは上書き同期
+  function syncSeed() {
+    const existing = getAll();
+    const deleted = getDeleted();
+
+    const map = new Map(existing.map(w => [String(w.id), w]));
+
+    seed.forEach(s => {
+      if (deleted.includes(s.id)) return;
+      const prev = map.get(String(s.id)) || {};
+      map.set(String(s.id), { ...prev, ...s });
+    });
+
+    setAll([...map.values()]);
   }
 
   function uid() {
-    // crypto.randomUUID が使える環境ならそれ優先
-    if (window.crypto && crypto.randomUUID) return crypto.randomUUID();
-    return String(Date.now()) + "_" + Math.random().toString(16).slice(2);
-  }
-
-  function normalizeTag(tag) {
-    return String(tag || "").trim();
-  }
-
-  function fillForm(work) {
-    workIdEl.value = work.id;
-    titleEl.value = work.title ?? "";
-    tagEl.value = work.tag ?? "";
-    descEl.value = work.desc ?? "";
-    dateEl.value = work.date ?? "";
-    imageEl.value = work.image ?? "";
-    saveBtn.textContent = "保存";
-  }
-
-  function resetForm() {
-    workIdEl.value = "";
-    form.reset();
-    saveBtn.textContent = "追加";
+    return "id-" + Math.random().toString(16).slice(2) + "-" + Date.now().toString(16);
   }
 
   function escapeHtml(str) {
@@ -60,124 +139,157 @@
       .replaceAll("<", "&lt;")
       .replaceAll(">", "&gt;")
       .replaceAll('"', "&quot;")
-      .replaceAll("'", "&#39;");
+      .replaceAll("'", "&#039;");
   }
 
-  function render() {
-    const works = loadWorks();
+  // ===== render =====
+  function renderList() {
+    if (!listEl) return;
 
-    // 新しい順っぽく見せる（idがuuidの場合は並び保証できないので date優先）
-    const sorted = [...works].sort((a, b) => {
-      const ad = (a.date || "").toString();
-      const bd = (b.date || "").toString();
-      if (ad !== bd) return bd.localeCompare(ad);
-      return String(b.id).localeCompare(String(a.id));
-    });
+    const items = getAll();
 
-    adminList.innerHTML = "";
-
-    if (sorted.length === 0) {
-      adminList.innerHTML = `<p class="muted">まだ作品がありません。上のフォームから追加してください。</p>`;
+    if (items.length === 0) {
+      listEl.innerHTML = `<p class="muted">まだデータがありません。</p>`;
       return;
     }
 
-    sorted.forEach((w) => {
-      const item = document.createElement("div");
-      item.className = "adminItem";
-
-      item.innerHTML = `
-        <img class="adminItem__thumb" src="${escapeHtml(w.image)}" alt="">
+    // work / project を混ぜて出す（見やすく）
+    listEl.innerHTML = items.map(w => `
+      <div class="adminItem" data-id="${escapeHtml(w.id)}">
+        <img class="adminItem__thumb" src="${escapeHtml(w.image || "")}" alt="">
         <div>
-          <div class="adminItem__title">${escapeHtml(w.title)}</div>
+          <div class="adminItem__title">${escapeHtml(w.title || "(no title)")}</div>
           <div class="adminItem__sub">
-            <span class="chip">${escapeHtml(w.tag)}</span>
-            <span class="muted">${escapeHtml(w.date)}</span>
+            <span class="muted">${escapeHtml(w.itemType === "project" ? "Project" : "Works")}</span>
+            <span class="muted">${escapeHtml(w.date || "")}</span>
+            <span class="muted">${escapeHtml(w.tag || "")}</span>
           </div>
+          ${w.link ? `<div class="muted" style="margin-top:6px;">link: ${escapeHtml(w.link)}</div>` : ""}
+
           <div class="adminItem__actions">
-            <button class="btn btn--ghost" type="button" data-action="edit" data-id="${escapeHtml(w.id)}">編集</button>
-            <button class="btn btn--danger" type="button" data-action="delete" data-id="${escapeHtml(w.id)}">削除</button>
+            <button class="btn" type="button" data-act="edit">編集</button>
+            <button class="btn btn--danger" type="button" data-act="del">削除</button>
           </div>
         </div>
-      `;
-      adminList.appendChild(item);
-    });
+      </div>
+    `).join("");
   }
 
-  function upsertWork(next) {
-    const works = loadWorks();
-    const idx = works.findIndex((w) => w.id === next.id);
-    if (idx >= 0) works[idx] = next;
-    else works.push(next);
-    saveWorks(works);
+  // ===== form fill =====
+  function fillForm(w) {
+    if (!w) return;
+    workIdEl.value = w.id || "";
+    titleEl.value = w.title || "";
+    tagEl.value = w.tag || "";
+    descEl.value = w.desc || "";
+    dateEl.value = w.date || "";
+    imageEl.value = w.image || "";
+    if (itemTypeEl) itemTypeEl.value = w.itemType || "work";
+    if (linkEl) linkEl.value = w.link || "";
   }
 
-  function deleteWork(id) {
-    const works = loadWorks().filter((w) => w.id !== id);
-    saveWorks(works);
+  function clearForm() {
+    workIdEl.value = "";
+    titleEl.value = "";
+    tagEl.value = "";
+    descEl.value = "";
+    dateEl.value = "";
+    imageEl.value = "";
+    if (itemTypeEl) itemTypeEl.value = "work";
+    if (linkEl) linkEl.value = "";
+  }
+
+  // ===== save =====
+  function upsertFromForm() {
+    const id = (workIdEl.value || "").trim() || uid();
+
+    const next = {
+      id,
+      itemType: (itemTypeEl?.value || "work").trim(),
+      title: (titleEl.value || "").trim(),
+      tag: (tagEl.value || "").trim(),
+      desc: (descEl.value || "").trim(),
+      date: (dateEl.value || "").trim(),
+      image: (imageEl.value || "").trim(),
+      link: (linkEl?.value || "").trim(),
+    };
+
+    const all = getAll();
+    const idx = all.findIndex(x => String(x.id) === String(id));
+    if (idx >= 0) all[idx] = { ...all[idx], ...next };
+    else all.push(next);
+
+    setAll(all);
+    clearForm();
+    renderList();
+  }
+
+  // ===== delete =====
+  function removeById(id) {
+    const all = getAll().filter(x => String(x.id) !== String(id));
+    setAll(all);
+
+    // seedの削除なら「復活禁止」にも入れる
+    if (String(id).startsWith("seed-")) {
+      const deleted = getDeleted();
+      if (!deleted.includes(id)) {
+        deleted.push(id);
+        setDeleted(deleted);
+      }
+    }
+
+    // 編集中だったらリセット
+    if (workIdEl.value === id) clearForm();
+
+    renderList();
   }
 
   // ===== events =====
-  document.addEventListener("DOMContentLoaded", () => {
-    render();
+  function bindListActions() {
+    if (!listEl) return;
 
-    form.addEventListener("submit", (e) => {
-      e.preventDefault(); // ★これが無いとページ遷移して「追加されない」ように見える
-
-      const title = titleEl.value.trim();
-      const tag = normalizeTag(tagEl.value);
-      const desc = descEl.value.trim();
-      const date = dateEl.value.trim();
-      const image = imageEl.value.trim();
-
-      // required はHTMLで効いてるけど、念のため
-      if (!title || !tag || !desc || !date || !image) return;
-
-      const editingId = workIdEl.value.trim();
-      const work = {
-        id: editingId || uid(),
-        title,
-        tag,
-        desc,
-        date,
-        image
-      };
-
-      upsertWork(work);
-      resetForm();
-      render();
-    });
-
-    resetBtn.addEventListener("click", () => {
-      resetForm();
-    });
-
-    adminList.addEventListener("click", (e) => {
-      const btn = e.target.closest("button[data-action]");
+    listEl.addEventListener("click", (e) => {
+      const btn = e.target.closest("button[data-act]");
       if (!btn) return;
 
-      const action = btn.dataset.action;
-      const id = btn.dataset.id;
+      const card = e.target.closest("[data-id]");
+      if (!card) return;
 
-      if (action === "edit") {
-        const work = loadWorks().find((w) => w.id === id);
-        if (work) {
-          fillForm(work);
-          window.scrollTo({ top: 0, behavior: "smooth" });
-        }
-        return;
+      const id = card.dataset.id;
+      const act = btn.dataset.act;
+
+      if (act === "edit") {
+        const w = getAll().find(x => String(x.id) === String(id));
+        fillForm(w);
+        window.scrollTo({ top: 0, behavior: "smooth" });
       }
 
-      if (action === "delete") {
-        const ok = confirm("この作品を削除しますか？");
-        if (!ok) return;
-
-        deleteWork(id);
-
-        // いまフォームで編集中のものを消したならフォームも戻す
-        if (workIdEl.value === id) resetForm();
-
-        render();
+      if (act === "del") {
+        // confirm（安全）
+        if (confirm("この項目を削除しますか？")) removeById(id);
       }
     });
+  }
+
+  // ===== boot =====
+  document.addEventListener("DOMContentLoaded", () => {
+    // まずseed同期（管理画面でも必ず入る）
+    syncSeed();
+
+    // 一覧描画
+    renderList();
+
+    // 編集/削除
+    bindListActions();
+
+    // 保存
+    form?.addEventListener("submit", (e) => {
+      e.preventDefault();
+      upsertFromForm();
+    });
+
+    // 「新規」ボタンがあるなら（任意）
+    const newBtn = $("#newBtn");
+    newBtn?.addEventListener("click", () => clearForm());
   });
 })();

@@ -26,10 +26,12 @@
 
     <nav class="menuPanel" id="menuPanel" aria-hidden="true">
       <a href="index.html">ホーム</a>
-      <a href="#works">作品一覧</a>
+      <a href="#works">Works</a>
+      <a href="#projects">Project</a>
       <a href="contact.html">お問合せ</a>
       <a href="archive.html">Archive（管理）</a>
     </nav>
+
 
     <div class="menuBackdrop" id="menuBackdrop" hidden></div>
   </header>
@@ -62,8 +64,32 @@
       </p>
     </section>
 
+    <section class="section section--bio" id="bio">
+      <div class="bioCard revealCard">
+        <!-- 左ページ -->
+        <div class="bioCard__page bioCard__page--left">
+          <div class="bioCard__stamp" aria-hidden="true">About</div>
+
+          <p class="bioCard__lead">4人兄弟の末っ子として生まれ、<br>自由な環境でのびのびと育った。</p>
+
+          <div class="bioCard__text">
+            <p>神山まるごと高専に入学。親元を離れ、徳島の地へ。</p>
+            <p>テクノロジー・デザイン・起業家精神を学ぶ。</p>
+            <p>特にデザインに力を入れている。</p>
+          </div>
+        </div>
+
+        <!-- 右ページ（写真） -->
+        <div class="bioCard__page bioCard__page--right">
+          <figure class="bioPhoto">
+            <img src="幼少期.png" alt="幼少期の写真">
+          </figure>
+        </div>
+      </div>
+    </section>
+
     <section class="section section--text" id="about">
-      <h2 class="sectionTitle">背景</h2>
+      <h2 class="sectionTitle">Background</h2>
       <div class="textBlock">
         <p>気づけば、ものづくりは私の生活の一部になっていました。</p>
         <p>家の中には、いつでも何かを作れる環境があり、作りたいと思った瞬間に手を動かすことが当たり前でした。</p>
@@ -76,16 +102,29 @@
     <section class="section" id="works">
       <div class="sectionHead">
         <h2 class="sectionTitle">Works</h2>
+        <div class="sectionTools">
+          <button class="sortBtn is-active" type="button" data-sort="created">
+            追加順
+          </button>
+          <button class="sortBtn" type="button" data-sort="date">
+            日付順
+          </button>
+        </div>
       </div>
       <div class="cards" id="worksGrid"></div>
     </section>
 
     <section class="section" id="projects">
       <div class="sectionHead">
-        <h2 class="sectionTitle">Projects</h2>
+        <h2 class="sectionTitle">Project</h2>
+        <div class="sectionTools">
+          <button class="sortBtn is-active" type="button" data-sort="created">追加順</button>
+          <button class="sortBtn" type="button" data-sort="date">日付順</button>
+        </div>
       </div>
       <div class="cards" id="projectsGrid"></div>
     </section>
+
 
     <!-- 5) Contactボタン -->
     <section class="section section--center">
@@ -96,6 +135,5 @@
   <!-- ✅ common.js は1回だけ / モーダルは home.js 側で管理 -->
   <script src="js/common.js"></script>
   <script src="js/home.js"></script>
-  <script src="js/works-modal.js"></script>
 </body>
 </html>
