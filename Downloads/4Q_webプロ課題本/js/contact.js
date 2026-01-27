@@ -4,7 +4,7 @@ form.addEventListener("submit", (e) => {
   e.preventDefault();
 
   // ★ここを自分の受信アドレスに変更
-  const TO = "yourmail@example.com";
+  const TO = "kmc2338@kamiyama.ac.jp";
 
   const name = document.getElementById("cName").value.trim();
   const email = document.getElementById("cEmail").value.trim();

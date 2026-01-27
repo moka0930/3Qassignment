@@ -13,6 +13,7 @@
   const titleEl = $("#title");
   const tagEl = $("#tag");
   const descEl = $("#desc");
+  const detailEl = $("#detail");
   const dateEl = $("#date");
   const imageEl = $("#image");
 
@@ -60,7 +61,7 @@
       itemType: "project",
       title: "さあくる",
       tag: "#町内バイト #デジタル万屋",
-      desc: "神山町のちょっとユニークなバイト。地域に根差した活動を行っている。<br>1年生の後期、お祭りを観に神社へ向かった帰り道",
+      desc: "神山町のちょっとユニークなバイト。地域に根差した活動を行っている。1年生の後期、お祭りを観に神社へ向かった帰り道",
       date: "2023/11",
       image: "images/さあくる.webp",
       link: ""
@@ -123,7 +124,7 @@
     seed.forEach(s => {
       if (deleted.includes(s.id)) return;
       const prev = map.get(String(s.id)) || {};
-      map.set(String(s.id), { ...prev, ...s });
+      map.set(String(s.id), { ...s, ...prev });
     });
 
     setAll([...map.values()]);
@@ -182,6 +183,7 @@
     titleEl.value = w.title || "";
     tagEl.value = w.tag || "";
     descEl.value = w.desc || "";
+    detailEl.value = w.detail || "";
     dateEl.value = w.date || "";
     imageEl.value = w.image || "";
     if (itemTypeEl) itemTypeEl.value = w.itemType || "work";
@@ -193,6 +195,7 @@
     titleEl.value = "";
     tagEl.value = "";
     descEl.value = "";
+    detailEl.value = "";
     dateEl.value = "";
     imageEl.value = "";
     if (itemTypeEl) itemTypeEl.value = "work";
@@ -209,6 +212,7 @@
       title: (titleEl.value || "").trim(),
       tag: (tagEl.value || "").trim(),
       desc: (descEl.value || "").trim(),
+      detail: (detailEl?.value || "").trim(),
       date: (dateEl.value || "").trim(),
       image: (imageEl.value || "").trim(),
       link: (linkEl?.value || "").trim(),

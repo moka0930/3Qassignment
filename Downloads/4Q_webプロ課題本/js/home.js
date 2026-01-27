@@ -149,7 +149,7 @@
     seed.forEach(s => {
       if (deleted.includes(s.id)) return;
       const prev = map.get(String(s.id)) || {};
-      map.set(String(s.id), { ...prev, ...s });
+      map.set(String(s.id), { ...s, ...prev }); 
     });
 
     setWorks([...map.values()]);
