@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Archive（管理） | ミヨのサイト</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Noto+Serif+JP:wght@500;600;700&display=swap" rel="stylesheet">
+
+</head>
+<body>
+  <header class="siteHeader">
+    <div class="siteHeader__inner">
+      <a class="siteHeader__logo" href="index.html">ミヨのサイト</a>
+      <button class="menuBtn" id="menuBtn" aria-label="メニュー" aria-expanded="false" aria-controls="menuPanel">
+        <span class="menuBtn__bar"></span><span class="menuBtn__bar"></span><span class="menuBtn__bar"></span>
+      </button>
+    </div>
+    <nav class="menuPanel" id="menuPanel" aria-hidden="true">
+      <a href="index.html">ホーム</a>
+      <a href="index.html#works">作品一覧</a>
+      <a href="contact.html">お問合せ</a>
+      <a href="archive.html">Archive（管理）</a>
+    </nav>
+    <div class="menuBackdrop" id="menuBackdrop" hidden></div>
+  </header>
+
+  <main class="page">
+    <h1 class="pageTitle">Archive（管理）</h1>
+
+    <section class="admin">
+      <h2 class="sectionTitle">新規追加 / 編集</h2>
+
+      <form class="form" id="workForm">
+        <input type="hidden" id="workId" />
+
+        <label>タイトル
+          <input id="title" required />
+        </label>
+
+        <label class="field">
+          <span class="field__label">種別</span>
+          <select id="itemType" class="field__control">
+            <option value="work" selected>Work</option>
+            <option value="project">Project</option>
+          </select>
+        </label>
+
+        <label>タグ（例：絵・デッサン）
+          <input id="tag" required />
+        </label>
+
+        <label>説明
+          <textarea id="desc" required rows="3"></textarea>
+        </label>
+
+        <label>日付（例：2025/10）
+            <input id="date" required />
+        </label>
+
+
+        <label>画像パス（例：images/work4.jpg）
+          <input id="image" required />
+        </label>
+
+        <div class="formActions">
+          <button class="btn" type="submit" id="saveBtn">追加</button>
+          <button class="btn btn--ghost" type="button" id="resetBtn">リセット</button>
+          <a class="btn btn--ghost" href="index.html#works">Homeで確認</a>
+        </div>
+
+      </form>
+    </section>
+
+    <section class="section">
+      <h2 class="sectionTitle">Work</h2>
+      <div class="cards" id="worksList"></div>
+    </section>
+
+    <section class="section">
+      <h2 class="sectionTitle">Project</h2>
+      <div class="cards" id="projectsList"></div>
+    </section>
+
+  </main>
+
+  <script src="js/common.js"></script>
+  <script src="js/archive.js"></script>
+</body>
+</html>
